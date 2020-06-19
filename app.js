@@ -19,11 +19,13 @@ let dom = {
       roundScore: document.querySelector("#current-0"),
       globalScore: document.querySelector("#score-0"),
       panel: document.querySelector(".player-0-panel"),
+      name: document.querySelector("#name-0"),
     },
     {
       roundScore: document.querySelector("#current-1"),
       globalScore: document.querySelector("#score-1"),
       panel: document.querySelector(".player-1-panel"),
+      name: document.querySelector("#name-1"),
     },
   ],
 };
@@ -58,10 +60,10 @@ function init() {
 
 // To generate the random number
 function generateRandom() {
-  return Math.round(Math.random() * 5 + 1);
+  return Math.round(Math.random() * 5) + 1;
 }
 
-// add round score
+// add to player's round score
 function addRoundScore(score, actPlayer) {
   if (score !== 1) {
     playerScore[actPlayer].roundScore += score;
@@ -72,6 +74,7 @@ function addRoundScore(score, actPlayer) {
 
 // function to change to next player
 function nextPlayer(actPlayer) {
+  dom.dice.style.display = "none";
   playerScore[actPlayer].roundScore = 0;
   dom.player[actPlayer].roundScore.textContent = "0";
   dom.player[actPlayer].panel.classList.remove("active");
@@ -79,20 +82,40 @@ function nextPlayer(actPlayer) {
   dom.player[currentPlayer].panel.classList.add("active");
 }
 
+// funtion to show the dice number on ui
+function showScore(actPlayer, score) {
+  dom.player[actPlayer].roundScore.textContent =
+    playerScore[actPlayer].roundScore;
+  dom.dice.src = "./images/dice-" + score + ".png";
+  dom.dice.style.display = "block";
+}
+
 // rollDice function to roll the dice
 function rollDice() {
   let score = generateRandom();
   addRoundScore(score, currentPlayer);
-  showScore(currentPlayer);
+  showScore(currentPlayer, score);
   console.log(score);
 }
 
-// funtion to show the dice number on ui
-function showScore(actPlayer) {
-  dom.player[actPlayer].roundScore.textContent =
-    playerScore[actPlayer].roundScore;
-  console.log(playerScore[actPlayer].roundScore);
+function handleHold() {
+  let pGlobalScore;
+  playerScore[currentPlayer].globalScore +=
+    playerScore[currentPlayer].roundScore;
+  dom.player[currentPlayer].globalScore.textContent =
+    playerScore[currentPlayer].globalScore;
+  pGlobalScore = playerScore[currentPlayer].globalScore;
+  if (pGlobalScore >= 10) {
+    dom.player[currentPlayer].panel.classList.add("winner");
+    dom.dice.style.display = "none";
+    dom.player[currentPlayer].name.textContent = "winner";
+  } else {
+    nextPlayer(currentPlayer);
+  }
 }
 
 // Event Listener for roll button
 dom.rollBtn.addEventListener("click", rollDice);
+
+// Event listener for hold button
+dom.holdBtn.addEventListener("click", handleHold);
