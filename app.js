@@ -4,7 +4,7 @@ GAME RULES:
 - The game has 2 players, playing in rounds
 - In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
 - BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
-- The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
+- The player can choose to 'Hold', which means that his ROUND score gets added to his GLOBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
@@ -44,7 +44,7 @@ let currentPlayer;
 
 // Call the init function
 init();
-// IIFE function to initialize the game
+// function to initialize the game
 function init() {
   currentPlayer = 0;
   dom.player.forEach((cur) => {
@@ -56,6 +56,13 @@ function init() {
 
   dom.player[0].panel.classList.add("active");
   dom.player[1].panel.classList.remove("active");
+  dom.player[0].panel.classList.remove("winner");
+  dom.player[1].panel.classList.remove("winner");
+  dom.player[0].name.textContent = "Player 1";
+  dom.player[1].name.textContent = "Player 2";
+
+  dom.holdBtn.removeAttribute("disabled");
+  dom.rollBtn.removeAttribute("disabled");
 }
 
 // To generate the random number
@@ -109,13 +116,27 @@ function handleHold() {
     dom.player[currentPlayer].panel.classList.add("winner");
     dom.dice.style.display = "none";
     dom.player[currentPlayer].name.textContent = "winner";
+    dom.holdBtn.setAttribute("disabled", "");
+    dom.rollBtn.setAttribute("disabled", "");
   } else {
     nextPlayer(currentPlayer);
   }
 }
 
+function startNewGame() {
+  // initialize game
+  init();
+  // Set the scores to zero
+  playerScore.forEach((cur) => {
+    cur.roundScore = 0;
+    cur.globalScore = 0;
+  });
+}
 // Event Listener for roll button
 dom.rollBtn.addEventListener("click", rollDice);
 
 // Event listener for hold button
 dom.holdBtn.addEventListener("click", handleHold);
+
+// Event listener for new game button
+dom.newBtn.addEventListener("click", startNewGame);
