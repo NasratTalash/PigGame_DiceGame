@@ -14,10 +14,13 @@ let dom = {
   newBtn: document.querySelector(".btn-new"),
   holdBtn: document.querySelector(".btn-hold"),
   cancelBtn: document.querySelector(".btn-cancel"),
+  settingBtn: document.querySelector(".btn-setting"),
   dice: document.querySelector(".dice"),
   modal: document.querySelector(".modalContainer"),
   acceptBtn: document.querySelector(".btn-accept"),
   winScore: document.querySelector(".winScore"),
+  winScoreUI: document.querySelector(".targetScore span"),
+  snackBar: document.querySelector(".snackbar"),
   player: [
     {
       roundScore: document.querySelector("#current-0"),
@@ -47,6 +50,7 @@ let playerScore = [
 ];
 
 let currentPlayer;
+let winningScore = 100;
 
 // Call the init function
 init();
@@ -69,6 +73,7 @@ function init() {
 
   dom.holdBtn.removeAttribute("disabled");
   dom.rollBtn.removeAttribute("disabled");
+  dom.settingBtn.removeAttribute("disabled");
 }
 
 // To generate the random number
@@ -107,8 +112,9 @@ function showScore(actPlayer, score) {
 function rollDice() {
   let score = generateRandom();
   addRoundScore(score, currentPlayer);
-  showScore(currentPlayer, score);
-  console.log(score);
+  if (score !== 1) {
+    showScore(currentPlayer, score);
+  }
 }
 
 function handleHold() {
@@ -118,12 +124,13 @@ function handleHold() {
   dom.player[currentPlayer].globalScore.textContent =
     playerScore[currentPlayer].globalScore;
   pGlobalScore = playerScore[currentPlayer].globalScore;
-  if (pGlobalScore >= 10) {
+  if (pGlobalScore >= winningScore) {
     dom.player[currentPlayer].panel.classList.add("winner");
     dom.dice.style.display = "none";
     dom.player[currentPlayer].name.textContent = "winner";
     dom.holdBtn.setAttribute("disabled", "");
     dom.rollBtn.setAttribute("disabled", "");
+    dom.settingBtn.setAttribute("disabled", "");
   } else {
     nextPlayer(currentPlayer);
   }
@@ -137,32 +144,58 @@ function startNewGame() {
     cur.roundScore = 0;
     cur.globalScore = 0;
   });
+  winningScore = 100;
+  dom.winScoreUI.textContent = winningScore;
 }
 
 // Function to close Modal and cancel input
 function closeModal() {
-  dom.modal.style.display = "none";
+  dom.modal.parentElement.classList.remove("show");
 }
 
 // Function to validate the input
-function checkInput(inputField) {
-  return inputField.value.length < 20;
+function checkInput() {
+  let inputWinScore = Number(dom.winScore.value);
+  let isWinScoreValid = !isNaN(inputWinScore); // if number is not NaN then result is true
+  let isNameValid = true;
+  dom.player.forEach((cur) => {
+    let isValid = cur.customName.value.length < 20;
+    if (!isValid) isNameValid = false; // If any of the names are not valid then names are not valid
+  });
+  console.log(isWinScoreValid, inputWinScore, dom.winScore.value);
+  return isNameValid && isWinScoreValid;
 }
 
 // Function to show the error
-function showError(text, target) {
-  const markup = `<p class="alert">${text}</p>`;
-  target.parentElement.insertAdjacentHTML("beforeend", markup);
+function showError(text) {
+  dom.snackBar.firstElementChild.innerHTML = text;
+  dom.snackBar.classList.add("active");
+  setTimeout(() => {
+    dom.snackBar.classList.remove("active");
+  }, 4000);
 }
 // Function to change win score and players' name
 function setInput() {
-  dom.player.forEach((cur) => {
-    if (checkInput(cur.customName)) {
-      cur.name.textContent = cur.customName.value;
-    } else {
-      showError("Name can not be more than 20 chars", cur.customName);
-    }
-  });
+  if (checkInput()) {
+    startNewGame(); // First start a new game then set names and win score
+    dom.player.forEach((cur) => {
+      if (cur.customName.value) {
+        cur.name.textContent = cur.customName.value;
+      }
+    });
+    winningScore = Number(dom.winScore.value);
+    dom.winScoreUI.textContent = winningScore;
+    closeModal();
+  } else {
+    showError(
+      "Win Score should be a number.<br>Player names should be 1-20 characters."
+    );
+  }
+}
+
+// Function to show the settings
+function showSetting() {
+  dom.modal.parentElement.classList.add("show");
 }
 // Event Listener for roll button
 dom.rollBtn.addEventListener("click", rollDice);
@@ -178,3 +211,6 @@ dom.cancelBtn.addEventListener("click", closeModal);
 
 // Event listener for modal accept button
 dom.acceptBtn.addEventListener("click", setInput);
+
+// Event listener for settings button
+dom.settingBtn.addEventListener("click", showSetting);

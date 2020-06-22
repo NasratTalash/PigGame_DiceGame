@@ -80,10 +80,10 @@ body {
 
 .active .player-name::after {
   content: "\2022";
-  font-size: 47px;
+  font-size: 35px;
   position: absolute;
   color: #eb4d4d;
-  top: -7px;
+  top: -5px;
   right: 10px;
 }
 
@@ -107,7 +107,8 @@ body {
   font-size: 30px;
 }
 
-.button {
+.button,
+.targetScore {
   position: absolute;
   width: 200px;
   left: 50%;
@@ -122,7 +123,11 @@ body {
   font-weight: 300;
   transition: background-color 0.3s, color 0.3s;
 }
-
+.targetScore {
+  text-align: center;
+  bottom: 50px;
+  cursor: initial;
+}
 .button:hover {
   font-weight: 600;
 }
@@ -147,6 +152,9 @@ i {
 
 .btn-new {
   top: 45px;
+}
+.btn-setting {
+  top: 95px;
 }
 .btn-roll {
   top: 403px;
@@ -173,7 +181,9 @@ i {
   font-style: italic;
   animation: glow 0.5s 3 ease-in-out;
 }
-
+.winner .player-name::after {
+  display: none;
+}
 @keyframes glow {
   0% {
     transform: scale(1);
@@ -193,6 +203,10 @@ i {
   background: rgba(0, 0, 0, 0.7);
   z-index: 50;
   position: relative;
+  display: none;
+}
+.modalOverlay.show {
+  display: block;
 }
 .modalContainer {
   width: 350px;
@@ -203,7 +217,6 @@ i {
   top: 50%;
   transform: translate(-50%, -50%);
   /* box-shadow: 0 0 10px 1000px rgba(0, 0, 0, 0.5); */
-  /* display:none; */
 }
 
 .cross * {
@@ -238,13 +251,11 @@ i {
 .field:focus {
   border: 2px solid rgba(0, 0, 0, 0.5);
 }
-.winScore,
-.playerName {
+.inputGroup {
   margin-bottom: 10px;
 }
 
-.winScore > p,
-.playerName > p {
+.inputGroup > p {
   opacity: 0.6;
   font-size: 14px;
 }
@@ -270,7 +281,8 @@ i {
   box-shadow: none;
 }
 .snackbar {
-  position: absolute;
+  visibility: hidden;
+  position: fixed;
   left: 50%;
   bottom: 5px;
   transform: translateX(-50%);
@@ -278,20 +290,43 @@ i {
   padding: 10px;
   z-index: 70;
   width: 300px;
-  color: #eb4d4d;
+  opacity: 0;
+}
+.snackbar > p {
+  padding-right: 20px;
+}
+.snackbar.active {
+  visibility: visible;
+  animation: fadeIn 0.7s ease-in-out forwards,
+    fadeOut 0.8s ease-in-out 2.5s forwards;
 }
 .alertIcon {
-  display: block;
-  width: 30px;
-  height: 30px;
+  /* width: 30px;
+  height: 30px; */
   position: absolute;
   right: 10px;
   top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.alertIcon i {
   display: block;
   font-size: 20px;
+  margin: 0;
+}
+@keyframes fadeIn {
+  0% {
+    bottom: 5px;
+    opacity: 0;
+  }
+  100% {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    bottom: 30px;
+    opacity: 1;
+  }
+  100% {
+    bottom: 5px;
+    opacity: 0;
+  }
 }

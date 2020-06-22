@@ -33,8 +33,11 @@
         </div>
 
         <button class="btn-new button"><i class="ion-ios-plus-outline"></i>New game</button>
+        <button class="btn-setting button" title="Set win score and players' name."><i
+                class="ion-gear-a"></i>Settings</button>
         <button class="btn-roll button"><i class="ion-ios-loop"></i>Roll dice</button>
         <button class="btn-hold button"><i class="ion-ios-download-outline"></i>Hold</button>
+        <p class="targetScore" title="Go to setting to change it.">Win Score: <span>100</span></p>
 
         <img src="./images/dice-5.png" alt="Dice" class="dice">
     </div>
@@ -44,29 +47,29 @@
             <div class="cross btn-cancel" title="Cancel">
                 <i class="ion-close-round"></i>
             </div>
-            <div class="winScore inputGroup">
+            <div class="inputGroup">
                 <label for="winScore" class="label">Win Score</label>
                 <input type="text" name="winScore" class="field winScore" id="winScore">
                 <p>Default value is 100.</p>
             </div>
-            <div class="playerName inputGroup">
+            <div class="inputGroup">
                 <label for="player0" class="label">First Player Name</label>
                 <input type="text" name="player0Name" class="field player-0-name" id="player0">
                 <p>Default value is player 1.</p>
             </div>
-            <div class="playerName inputGroup">
+            <div class="inputGroup">
                 <label for="player1" class="label">Second Player Name</label>
                 <input type="text" name="player1Name" class="field player-1-name" id="player1">
                 <p>Default value is player 2.</p>
             </div>
             <button class="modalBtn btn-accept">Accept</button>
         </div>
-        <div class="snackbar">
-            <p class="alert">Error</p>
-            <span class="alertIcon"><i class="ion-information-circled"></i></span>
-        </div>
     </div>
 
+    <div class="snackbar">
+        <p class="alert">Error</p>
+        <i class="ion-information-circled alertIcon"></i>
+    </div>
 
     <script src="app.js"></script>
 </body>
