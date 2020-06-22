@@ -107,7 +107,7 @@ body {
   font-size: 30px;
 }
 
-button {
+.button {
   position: absolute;
   width: 200px;
   left: 50%;
@@ -123,14 +123,14 @@ button {
   transition: background-color 0.3s, color 0.3s;
 }
 
-button:hover {
+.button:hover {
   font-weight: 600;
 }
-button:hover i {
+.button:hover i {
   margin-right: 20px;
 }
 
-button:focus {
+.button:focus {
   outline: none;
 }
 
@@ -184,4 +184,114 @@ i {
   100% {
     transform: scale(1);
   }
+}
+
+/* ----- Modal styles ----- */
+.modalOverlay {
+  min-height: 100vh;
+  min-width: 100vw;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  position: relative;
+}
+.modalContainer {
+  width: 350px;
+  padding: 30px 40px;
+  background: #f4f4f4;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* box-shadow: 0 0 10px 1000px rgba(0, 0, 0, 0.5); */
+  /* display:none; */
+}
+
+.cross * {
+  float: right;
+  font-size: 18px;
+  margin-right: 0;
+  color: #222;
+}
+.cross *:hover {
+  color: #eb4d4d;
+}
+.cross::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.label {
+  display: block;
+  margin-bottom: 5px;
+  color: #222;
+}
+.field {
+  border: none;
+  background: none;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  height: 30px;
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  outline: transparent;
+}
+.field:focus {
+  border: 2px solid rgba(0, 0, 0, 0.5);
+}
+.winScore,
+.playerName {
+  margin-bottom: 10px;
+}
+
+.winScore > p,
+.playerName > p {
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+.modalBtn {
+  border: none;
+  background: none;
+  height: 30px;
+  background: #eb4d4d;
+  display: block;
+  width: 100%;
+  color: #f4f4f4;
+  outline: transparent;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0.9;
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+}
+.modalBtn:hover {
+  opacity: 1;
+}
+.modalBtn:active {
+  box-shadow: none;
+}
+.snackbar {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  background: #f4f4f4;
+  padding: 10px;
+  z-index: 70;
+  width: 300px;
+  color: #eb4d4d;
+}
+.alertIcon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alertIcon i {
+  display: block;
+  font-size: 20px;
 }

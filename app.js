@@ -13,19 +13,25 @@ let dom = {
   rollBtn: document.querySelector(".btn-roll"),
   newBtn: document.querySelector(".btn-new"),
   holdBtn: document.querySelector(".btn-hold"),
+  cancelBtn: document.querySelector(".btn-cancel"),
   dice: document.querySelector(".dice"),
+  modal: document.querySelector(".modalContainer"),
+  acceptBtn: document.querySelector(".btn-accept"),
+  winScore: document.querySelector(".winScore"),
   player: [
     {
       roundScore: document.querySelector("#current-0"),
       globalScore: document.querySelector("#score-0"),
       panel: document.querySelector(".player-0-panel"),
       name: document.querySelector("#name-0"),
+      customName: document.querySelector(".player-0-name"),
     },
     {
       roundScore: document.querySelector("#current-1"),
       globalScore: document.querySelector("#score-1"),
       panel: document.querySelector(".player-1-panel"),
       name: document.querySelector("#name-1"),
+      customName: document.querySelector(".player-1-name"),
     },
   ],
 };
@@ -132,6 +138,32 @@ function startNewGame() {
     cur.globalScore = 0;
   });
 }
+
+// Function to close Modal and cancel input
+function closeModal() {
+  dom.modal.style.display = "none";
+}
+
+// Function to validate the input
+function checkInput(inputField) {
+  return inputField.value.length < 20;
+}
+
+// Function to show the error
+function showError(text, target) {
+  const markup = `<p class="alert">${text}</p>`;
+  target.parentElement.insertAdjacentHTML("beforeend", markup);
+}
+// Function to change win score and players' name
+function setInput() {
+  dom.player.forEach((cur) => {
+    if (checkInput(cur.customName)) {
+      cur.name.textContent = cur.customName.value;
+    } else {
+      showError("Name can not be more than 20 chars", cur.customName);
+    }
+  });
+}
 // Event Listener for roll button
 dom.rollBtn.addEventListener("click", rollDice);
 
@@ -140,3 +172,9 @@ dom.holdBtn.addEventListener("click", handleHold);
 
 // Event listener for new game button
 dom.newBtn.addEventListener("click", startNewGame);
+
+// Event listener for modal cancel/close button
+dom.cancelBtn.addEventListener("click", closeModal);
+
+// Event listener for modal accept button
+dom.acceptBtn.addEventListener("click", setInput);

@@ -32,12 +32,41 @@
             </div>
         </div>
 
-        <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
-        <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
-        <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
+        <button class="btn-new button"><i class="ion-ios-plus-outline"></i>New game</button>
+        <button class="btn-roll button"><i class="ion-ios-loop"></i>Roll dice</button>
+        <button class="btn-hold button"><i class="ion-ios-download-outline"></i>Hold</button>
 
         <img src="./images/dice-5.png" alt="Dice" class="dice">
     </div>
+
+    <div class="modalOverlay">
+        <div class="modalContainer">
+            <div class="cross btn-cancel" title="Cancel">
+                <i class="ion-close-round"></i>
+            </div>
+            <div class="winScore inputGroup">
+                <label for="winScore" class="label">Win Score</label>
+                <input type="text" name="winScore" class="field winScore" id="winScore">
+                <p>Default value is 100.</p>
+            </div>
+            <div class="playerName inputGroup">
+                <label for="player0" class="label">First Player Name</label>
+                <input type="text" name="player0Name" class="field player-0-name" id="player0">
+                <p>Default value is player 1.</p>
+            </div>
+            <div class="playerName inputGroup">
+                <label for="player1" class="label">Second Player Name</label>
+                <input type="text" name="player1Name" class="field player-1-name" id="player1">
+                <p>Default value is player 2.</p>
+            </div>
+            <button class="modalBtn btn-accept">Accept</button>
+        </div>
+        <div class="snackbar">
+            <p class="alert">Error</p>
+            <span class="alertIcon"><i class="ion-information-circled"></i></span>
+        </div>
+    </div>
+
 
     <script src="app.js"></script>
 </body>
