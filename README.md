@@ -16,9 +16,9 @@ _GAME RULES:_
 
 ### Added Features to game are:
 
-- User can select the points to complete in order to win the game via setting option.
-- User can change the players' name through setting option.
-- User can see viually how much score is needed to win the game.
+- User can select the points to complete in order to win the game via settings option.
+- User can change the players' name through settings option.
+- User can see visually how much score is needed to win the game.
 
 A new game rule has also been implemented.
 
