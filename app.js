@@ -167,7 +167,8 @@ function closeModal() {
 // Function to validate the input
 function checkInput() {
   let inputWinScore = Number(dom.winScore.value);
-  let isWinScoreValid = !isNaN(inputWinScore) && inputWinScore !== 0; // if number is not NaN then result is true
+  let isWinScoreValid = inputWinScore !== 0 && !isNaN(inputWinScore); // if number is not NaN then result is true
+  console.log(isWinScoreValid);
   let isNameValid = true;
   dom.player.forEach((cur) => {
     let isValid = cur.customName.value.length < 20;
