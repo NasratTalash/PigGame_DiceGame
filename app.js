@@ -51,6 +51,8 @@ let playerScore = [
 
 let currentPlayer;
 let winningScore = 100;
+let prevScore, score;
+prevScore = 0;
 
 // Call the init function
 init();
@@ -82,8 +84,11 @@ function generateRandom() {
 }
 
 // add to player's round score
-function addRoundScore(score, actPlayer) {
-  if (score !== 1) {
+function addRoundScore(score, prevScore, actPlayer) {
+  if (score === 6 && prevScore === 6) {
+    clearGlobalScore(actPlayer);
+    nextPlayer(actPlayer);
+  } else if (score !== 1) {
     playerScore[actPlayer].roundScore += score;
   } else {
     nextPlayer(actPlayer);
@@ -100,6 +105,11 @@ function nextPlayer(actPlayer) {
   dom.player[currentPlayer].panel.classList.add("active");
 }
 
+// Function to clear the global score
+function clearGlobalScore(actPlayer) {
+  playerScore[actPlayer].globalScore = 0;
+  dom.player[actPlayer].globalScore.textContent = "0";
+}
 // funtion to show the dice number on ui
 function showScore(actPlayer, score) {
   dom.player[actPlayer].roundScore.textContent =
@@ -110,11 +120,12 @@ function showScore(actPlayer, score) {
 
 // rollDice function to roll the dice
 function rollDice() {
-  let score = generateRandom();
-  addRoundScore(score, currentPlayer);
+  score = generateRandom();
+  addRoundScore(score, prevScore, currentPlayer);
   if (score !== 1) {
     showScore(currentPlayer, score);
   }
+  prevScore = score; // save the score as previous score for next function call
 }
 
 function handleHold() {
@@ -162,7 +173,6 @@ function checkInput() {
     let isValid = cur.customName.value.length < 20;
     if (!isValid) isNameValid = false; // If any of the names are not valid then names are not valid
   });
-  console.log(isWinScoreValid, inputWinScore, dom.winScore.value);
   return isNameValid && isWinScoreValid;
 }
 
