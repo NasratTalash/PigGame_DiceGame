@@ -22,6 +22,6 @@ _GAME RULES:_
 
 A new game rule has also been implemented.
 
-- When a player rolls 6 two times in row, all his ROUND score and GLOBAL score gets lost. Then, it's next player's turn.
+- When a player rolls 6 two times in a row, all his ROUND score and GLOBAL score gets lost. Then, it's next player's turn.
 
 **Disclaimer:** Since the focus of this project is on practicing JavaScript, the game is not designed for small devices (mobiles and tablets).
